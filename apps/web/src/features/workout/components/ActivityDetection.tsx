@@ -67,17 +67,5 @@ export const ActivityDetection = ({
     [currentActivity]
   );
 
-  return (
-    <div>
-      <Button
-        className="mb-2 w-full"
-        onClick={() => {
-          console.log("Start");
-        }}
-      >
-        Start workout
-      </Button>
-      <PoseEstimation detect={handleDetect} />
-    </div>
-  );
+  return <PoseEstimation detect={handleDetect} />;
 };
