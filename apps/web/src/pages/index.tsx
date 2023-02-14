@@ -18,18 +18,10 @@ const workouts = {
     activities: [
       { count: 10, type: "squat" },
       { count: 10, type: "push_up" },
-      // { count: 10, type: "jumping_jack" },
+      { time: 30, type: "plank" },
     ],
   },
-  emom: {
-    type: "emom",
-    duration: 10 * ONE_MINUTE,
-    activities: [
-      { count: 10, type: "squat" },
-      { count: 10, type: "push_up" },
-      // { count: 10, type: "jumping_jack" },
-    ],
-  },
+  emom: {},
 };
 
 const activities = {

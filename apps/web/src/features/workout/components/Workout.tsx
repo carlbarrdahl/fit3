@@ -19,7 +19,11 @@ export const Workout = ({ workout }: { workout: t.Workout }) => {
           >
             <div className="absolute -left-1 mt-1.5 h-2 w-2 rounded-full bg-zinc-400" />
             <div>
-              {counters[i] || 0} / {activity.count} {activity.type}
+              {activity.time
+                ? `${activity.time} sec `
+                : `${counters[i] || 0} / ${activity.count} `}
+
+              {activity.type}
             </div>
           </li>
         ))}
