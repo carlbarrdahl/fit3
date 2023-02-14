@@ -1,11 +1,10 @@
 import { useCallback, useReducer, useRef } from "react";
 import dynamic from "next/dynamic";
 import { useWorkout } from "../store";
-import { activityModes, Workout, WorkoutActivity } from "../schemas";
+import { Workout, WorkoutActivity } from "../schemas";
 
 import { Activity } from "activities";
 import { CheckPoseArgs } from "utils/pose";
-import { useDuration } from "../hooks/useDuration";
 
 const PoseEstimation = dynamic(() => import("components/PoseEstimation"), {
   ssr: false,
