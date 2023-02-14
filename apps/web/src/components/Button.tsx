@@ -2,11 +2,11 @@ import { createComponent } from "components";
 import { tv } from "tailwind-variants";
 
 const button = tv({
-  base: "inline-flex items-center tracking-wide text-gray-50 rounded active:opacity-90 transition-colors",
+  base: "inline-flex items-center justify-center tracking-wide text-gray-50 rounded active:opacity-90 transition-colors",
   variants: {
     color: {
-      default: "bg-gray-200 hover:bg-gray-300 text-gray-900",
-      dark: "bg-gray-900 text-gray-50 hover:bg-gray-800",
+      default: "bg-zinc-900 hover:bg-zinc-800 text-zinc-50",
+      dark: "bg-zinc-900 text-zinc-50 hover:bg-zinc-800",
       primary: "bg-sky-500 text-sky-50 hover:bg-sky-400",
     },
     size: {
