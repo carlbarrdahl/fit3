@@ -1,8 +1,9 @@
-import { InputImage } from "@mediapipe/pose";
+import { Camera } from "@mediapipe/camera_utils";
 import { memo, useEffect, useRef } from "react";
 
 import { CheckPoseArgs, createCamera, createPose, render } from "utils/pose";
 
+let camera: Camera;
 const pose = createPose();
 
 function usePose(detect: (args: CheckPoseArgs) => void) {
@@ -12,37 +13,34 @@ function usePose(detect: (args: CheckPoseArgs) => void) {
   useEffect(() => {
     const canvas = canvasRef.current;
     const image = videoRef.current;
+
     if (canvas && image) {
       canvas && pose.onResults(render(canvas, detect));
-
-      const camera = createCamera(image, {
-        onFrame: () => pose.send({ image }),
-      });
-      console.log(camera);
-
-      camera.start();
+      if (!camera) {
+        camera = createCamera(image, { onFrame: () => pose.send({ image }) });
+        camera.start();
+      }
     }
   }, [detect]);
 
   return { canvasRef, videoRef };
 }
 
-export const PoseEstimation = memo(
-  ({ detect }: { detect: (args: CheckPoseArgs) => void }) => {
-    const { videoRef, canvasRef } = usePose(detect);
-    return (
-      <div className="relative">
-        <canvas
-          width={600}
-          height={600}
-          ref={canvasRef}
-          className="absolute top-0 left-0 w-full"
-        />
+type Props = { detect: (args: CheckPoseArgs) => void };
 
-        <video ref={videoRef} muted />
-      </div>
-    );
-  }
-);
+export const PoseEstimation = memo(({ detect }: Props) => {
+  const { videoRef, canvasRef } = usePose(detect);
+  return (
+    <div className="relative">
+      <canvas
+        width={600}
+        height={600}
+        ref={canvasRef}
+        className="absolute top-0 left-0 w-full"
+      />
+      <video ref={videoRef} muted />
+    </div>
+  );
+});
 
 export default PoseEstimation;

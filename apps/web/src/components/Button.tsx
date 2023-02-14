@@ -5,7 +5,7 @@ const button = tv({
   base: "inline-flex items-center justify-center tracking-wide text-gray-50 rounded active:opacity-90 transition-colors",
   variants: {
     color: {
-      default: "bg-zinc-900 hover:bg-zinc-800 text-zinc-50",
+      default: "bg-zinc-800 hover:bg-zinc-700 text-zinc-50",
       dark: "bg-zinc-900 text-zinc-50 hover:bg-zinc-800",
       primary: "bg-sky-500 text-sky-50 hover:bg-sky-400",
     },

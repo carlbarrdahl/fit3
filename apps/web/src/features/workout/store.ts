@@ -3,16 +3,23 @@ import produce from "immer";
 import { Workout } from "./schemas";
 
 interface WorkoutState {
-  isFinished: boolean;
   currentActivity: number;
   counters: { [index: number]: number };
-  incCount: (workout: Workout) => void;
+  startedAt: number;
+  finishedAt: number;
+  tick: (workout: Workout) => void;
+  start: () => void;
+  stop: () => void;
 }
+
 export const useWorkout = create<WorkoutState>((set) => ({
   currentActivity: 0,
   counters: {},
-  isFinished: false,
-  incCount: (workout) =>
+  startedAt: 0,
+  finishedAt: 0,
+  start: () => set((state) => ({ ...state, startedAt: Date.now() })),
+  stop: () => set((state) => ({ ...state, finishedAt: Date.now() })),
+  tick: (workout) =>
     set(
       produce((state) => {
         let sound = 0;
@@ -29,7 +36,9 @@ export const useWorkout = create<WorkoutState>((set) => ({
         }
 
         if (state.currentActivity === workout.activities.length) {
-          state.isFinished = true;
+          // state.stop();
+          state.counters = {};
+          state.currentActivity = 0;
           sound++;
         }
 

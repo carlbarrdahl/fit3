@@ -9,6 +9,8 @@ import squatActivity from "activities/squat";
 import pushupActivity from "activities/push_up";
 import plankActivity from "activities/plank";
 import { activityModes, activityTypes } from "features/workout/schemas";
+import { useWorkout } from "features/workout/store";
+import { useState } from "react";
 
 const ONE_MINUTE = 60 * 1000;
 
