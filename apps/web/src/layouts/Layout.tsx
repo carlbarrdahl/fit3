@@ -47,7 +47,7 @@ export const Layout = ({
           </Link>
         </div>
       </header>
-      <div className="h-[2px] bg-gradient-to-r from-green-400 via-yellow-400  to-pink-500 " />
+      <div className="h-[2px] bg-gradient-to-r from-cyan-400 via-orange-400  to-pink-500 " />
       <div className="p-4">{children}</div>
     </BaseLayout>
   );

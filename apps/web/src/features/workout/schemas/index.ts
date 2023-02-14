@@ -8,7 +8,20 @@ const WorkoutSchema = z.object({
 });
 
 const WorkoutResultsSchema = z.object({
-  //
+  timestamp: z.number(),
+  proof: z.array(
+    z.object({
+      timestamp: z.number(),
+      parts: z.record(
+        z.object({
+          x: z.number(),
+          y: z.number(),
+          z: z.number(),
+          visibility: z.number(),
+        })
+      ),
+    })
+  ),
 });
 
 export type Workout = z.infer<typeof WorkoutSchema>;

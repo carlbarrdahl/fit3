@@ -1,98 +1,86 @@
-import { useCallback, useRef } from "react";
+import { useCallback, useReducer, useRef } from "react";
 import dynamic from "next/dynamic";
 import { CheckPoseArgs } from "components/PoseEstimation";
 import { useWorkout } from "../store";
 import { Workout, WorkoutActivity } from "../schemas";
 import { Button } from "components/Button";
 
+import squatActivity from "activities/squat";
+import pushupActivity from "activities/push_up";
+import plankActivity from "activities/plank";
+import { Activity } from "activities";
+
 const PoseEstimation = dynamic(() => import("components/PoseEstimation"), {
   ssr: false,
 });
 
-type Detection = CheckPoseArgs & {
-  state: { count: number; mode: "UP" | "DOWN" | null };
-  onCount: (count: number) => void;
-};
+let lastUpdate = 0;
 
-const checkSquats = ({ angle, parts, state, onCount }: Detection) => {
-  if (parts?.NOSE.x <= 0.5) {
-    state.mode = "UP";
-  }
-  if (parts?.NOSE.x > 0.6 && state.mode === "UP") {
-    state.mode = "DOWN";
-    state.count = state.count + 1;
-    onCount(state.count);
-  }
-
-  const points = [
-    parts.LEFT_WRIST,
-    parts.LEFT_ELBOW,
-    parts.LEFT_SHOULDER,
-  ] as const;
-  // Check if every part is visible
-  if (points.every((point) => point?.visibility && point.visibility > 0.5)) {
-    // Calculate angle
-    console.log(angle(...points));
-  }
-};
-const checkPushups = ({ parts, state, onCount }: Detection) => {
-  if (parts?.NOSE.y <= 0.5) {
-    state.mode = "UP";
-  }
-  if (parts?.NOSE.y > 0.6 && state.mode === "UP") {
-    state.mode = "DOWN";
-    state.count = state.count + 1;
-    onCount(state.count);
-  }
-};
-
-const activityDetections = {
-  squat: checkSquats,
-  push_up: checkPushups,
-  jumping_jack: checkSquats,
-};
-
-export const ActivityDetection = ({ workout }: { workout: Workout }) => {
+const SAMPLING_RATE = 500;
+export const ActivityDetection = ({
+  activities,
+  workout,
+}: {
+  activities: Record<string, (args: Activity) => void>;
+  workout: Workout;
+}) => {
   const state = useRef({ count: 0, mode: null });
-  const { currentActivity, counters, incCount, isFinished } = useWorkout();
+  const { currentActivity, incCount } = useWorkout();
+
+  const [proof, pushProof] = useReducer(
+    (prev: any[], next: {}) => prev.concat(next),
+    []
+  );
+
   const handleDetect = useCallback(
     (args: CheckPoseArgs) => {
       const activity = workout.activities[currentActivity] as WorkoutActivity;
       if (activity) {
-        const type = activity.type as keyof typeof activityDetections;
-        const fn = activityDetections[type] || (() => {});
-        fn({
+        const type = activity.type;
+        activities[type]?.({
           ...args,
           state: state.current,
           onCount: (c) => incCount(workout),
         });
 
         // Record args.parts and store in WorkoutResults
+
+        const now = Date.now();
+        if (now - lastUpdate > SAMPLING_RATE) {
+          const parts = Object.entries(args.parts)
+            // Only visible parts
+            .filter(([key, part]) => part?.visibility && part.visibility > 0.5)
+            .reduce(
+              (acc, [key, part]) => ({
+                ...acc,
+                timestamp: Date.now(),
+                parts: {
+                  ...acc.parts,
+                  [key]: part,
+                },
+              }),
+              { parts: {} }
+            );
+          lastUpdate = Date.now();
+          // pushProof(parts);
+          console.log(parts);
+        }
       }
     },
     [currentActivity]
   );
+
   return (
     <div>
       <Button
         className="mb-2 w-full"
         onClick={() => {
-          console.log("next");
-          incCount(workout);
+          console.log("Start");
         }}
       >
         Start workout
       </Button>
       <PoseEstimation detect={handleDetect} />
-      {/* <Button
-        className="mt-4"
-        onClick={() => {
-          console.log("next");
-          incCount(workout);
-        }}
-      >
-        Skip
-      </Button> */}
     </div>
   );
 };
