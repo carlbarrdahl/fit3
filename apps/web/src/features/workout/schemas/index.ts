@@ -1,8 +1,15 @@
 import { z } from "zod";
 
-const WorkoutActivitySchema = z.object({ count: z.number(), type: z.string() });
-const WorkoutSchema = z.object({
+export const activityModes = { repeat: "repeat", time: "time" } as const;
+export const activityTypes = { amrap: "amrap" } as const;
+const WorkoutActivitySchema = z.object({
+  count: z.number(),
   type: z.string(),
+  mode: z.nativeEnum(activityModes),
+});
+
+const WorkoutSchema = z.object({
+  type: z.nativeEnum(activityTypes),
   duration: z.number(),
   activities: z.array(WorkoutActivitySchema),
 });

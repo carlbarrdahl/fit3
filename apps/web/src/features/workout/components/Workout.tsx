@@ -19,8 +19,8 @@ export const Workout = ({ workout }: { workout: t.Workout }) => {
           >
             <div className="absolute -left-1 mt-1.5 h-2 w-2 rounded-full bg-zinc-400" />
             <div>
-              {activity.time
-                ? `${activity.time} sec `
+              {activity.mode === t.activityModes.time
+                ? `${activity.count} sec `
                 : `${counters[i] || 0} / ${activity.count} `}
 
               {activity.type}
