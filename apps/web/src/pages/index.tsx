@@ -10,14 +10,26 @@ import pushupActivity from "activities/push_up";
 import plankActivity from "activities/plank";
 
 const ONE_MINUTE = 60 * 1000;
-const workout = {
-  type: "amrap",
-  duration: 10 * ONE_MINUTE,
-  activities: [
-    { count: 10, type: "squat" },
-    { count: 10, type: "push_up" },
-    // { count: 10, type: "jumping_jack" },
-  ],
+
+const workouts = {
+  amrap: {
+    type: "amrap",
+    duration: 10 * ONE_MINUTE,
+    activities: [
+      { count: 10, type: "squat" },
+      { count: 10, type: "push_up" },
+      // { count: 10, type: "jumping_jack" },
+    ],
+  },
+  emom: {
+    type: "emom",
+    duration: 10 * ONE_MINUTE,
+    activities: [
+      { count: 10, type: "squat" },
+      { count: 10, type: "push_up" },
+      // { count: 10, type: "jumping_jack" },
+    ],
+  },
 };
 
 const activities = {
@@ -29,8 +41,8 @@ const activities = {
 const Home: NextPage = () => {
   return (
     <Layout>
-      <Workout workout={workout} />
-      <ActivityDetection workout={workout} activities={activities} />
+      <Workout workout={workouts.amrap} />
+      <ActivityDetection workout={workouts.amrap} activities={activities} />
     </Layout>
   );
 };
