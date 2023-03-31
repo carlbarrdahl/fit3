@@ -1,4 +1,4 @@
-import { useClock, useWorkout } from "../store";
+import { useWorkout } from "../store";
 import { ONE_MINUTE } from "utils/constants";
 import * as t from "../schemas";
 import { Button } from "components/Button";

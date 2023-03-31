@@ -1,6 +1,6 @@
 import { useCallback, useReducer, useRef } from "react";
 import dynamic from "next/dynamic";
-import { useClock, useWorkout } from "../store";
+import { useWorkout } from "../store";
 import { Workout, WorkoutActivity } from "../schemas";
 
 import { Activity } from "activities";
