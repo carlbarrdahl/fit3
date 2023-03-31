@@ -1,31 +1,31 @@
 import { Activity } from "activities";
 
 export default function plank({ parts, state, calcAngle, onCount }: Activity) {
-  // TODO: check body parts for successful squat
-  // TODO: handle timer / count every second
+  // Alternate between 1 and 0 every half second (tick tock)
+  const tick = Math.floor(Date.now() / 500) % 2;
 
-  if (state.startedAt) {
-    const duration = Math.floor((Date.now() - state.startedAt) / 1000);
+  // Points to calculate angle for
+  const left = [
+    parts.LEFT_WRIST,
+    parts.LEFT_SHOULDER,
+    parts.LEFT_HEEL,
+  ] as const;
+  const right = [
+    parts.RIGHT_WRIST,
+    parts.RIGHT_SHOULDER,
+    parts.RIGHT_HEEL,
+  ] as const;
 
-    // Points to calculate angle for
-    const left = [
-      parts.LEFT_WRIST,
-      parts.LEFT_SHOULDER,
-      parts.LEFT_HEEL,
-    ] as const;
-    const right = [
-      parts.RIGHT_WRIST,
-      parts.RIGHT_SHOULDER,
-      parts.RIGHT_HEEL,
-    ] as const;
+  // Calculate angles
+  const leftAngle = calcAngle(...left);
+  const rightAngle = calcAngle(...right);
 
-    // Calculate angles
-    const leftAngle = calcAngle(...left);
-    const rightAngle = calcAngle(...right);
-
-    if (duration > state.count) {
-      state.count = state.count + 1;
-      onCount(state.count);
-    }
+  // TODO: check body parts for successful plank before counting
+  if (state.mode === "UP" && tick) {
+    onCount();
+    state.mode = "DOWN";
+  }
+  if (!tick) {
+    state.mode = "UP";
   }
 }

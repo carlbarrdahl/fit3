@@ -30,6 +30,7 @@ type Props = { detect: (args: CheckPoseArgs) => void };
 
 export const PoseEstimation = memo(({ detect }: Props) => {
   const { videoRef, canvasRef } = usePose(detect);
+
   return (
     <div className="relative">
       <canvas

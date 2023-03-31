@@ -11,18 +11,8 @@ const Home: NextPage = () => {
   return (
     <Layout>
       <div className="mb-2 uppercase tracking-wider text-zinc-600">
-        Today's workout
+        Leaderboard
       </div>
-      <Link href={`/workout/today`}>
-        <div className="rounded border border-zinc-800 p-4">
-          <div className="font-bold">
-            {workout.type} {workout.duration / ONE_MINUTE} min.
-          </div>
-          <div className="pl-6 pt-4">
-            <ActivityList {...workout} />
-          </div>
-        </div>
-      </Link>
     </Layout>
   );
 };

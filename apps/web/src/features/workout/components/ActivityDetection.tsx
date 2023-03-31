@@ -1,6 +1,6 @@
 import { useCallback, useReducer, useRef } from "react";
 import dynamic from "next/dynamic";
-import { useWorkout } from "../store";
+import { useClock, useWorkout } from "../store";
 import { Workout, WorkoutActivity } from "../schemas";
 
 import { Activity } from "activities";
@@ -21,14 +21,15 @@ type Props = {
 
 export const ActivityDetection = ({ activities, workout }: Props) => {
   const state = useRef({ count: 0, mode: null, startedAt: 0 });
+
+  // const {  } = useClock();
   const { startedAt, currentActivity, tick } = useWorkout();
 
+  // TODO: Move to store
   const [proof, pushProof] = useReducer(
     (prev: any[], next: {}) => prev.concat(next),
     []
   );
-
-  console.log("startedAt", startedAt);
 
   const handleDetect = useCallback(
     (args: CheckPoseArgs) => {
@@ -44,27 +45,23 @@ export const ActivityDetection = ({ activities, workout }: Props) => {
         });
 
         // Record args.parts and store in WorkoutResults
-
-        // const now = Date.now();
-        // if (now - lastUpdate > SAMPLING_RATE) {
-        //   const parts = Object.entries(args.parts)
-        //     // Only visible parts
-        //     .filter(([key, part]) => part?.visibility && part.visibility > 0.5)
-        //     .reduce(
-        //       (acc, [key, part]) => ({
-        //         ...acc,
-        //         timestamp: Date.now(),
-        //         parts: {
-        //           ...acc.parts,
-        //           [key]: part,
-        //         },
-        //       }),
-        //       { parts: {} }
-        //     );
-        //   lastUpdate = Date.now();
-        //   // pushProof(parts);
-        //   console.log(parts);
-        // }
+        // Move to store
+        const now = Date.now();
+        if (now - lastUpdate > SAMPLING_RATE) {
+          const parts = Object.entries(args.parts)
+            // Only visible parts
+            .filter(([key, part]) => part?.visibility && part.visibility > 0.5)
+            .reduce(
+              (acc, [key, part]) => ({
+                ...acc,
+                timestamp: Date.now(),
+                parts: { ...acc.parts, [key]: part },
+              }),
+              { parts: {} }
+            );
+          lastUpdate = Date.now();
+          // pushProof(parts);
+        }
       }
     },
     [currentActivity, startedAt]
