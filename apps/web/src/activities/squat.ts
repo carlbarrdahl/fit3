@@ -19,6 +19,6 @@ export default function squat({ parts, state, calcAngle, onCount }: Activity) {
   ) {
     state.mode = "DOWN";
     state.count = state.count + 1;
-    onCount(state.count);
+    onCount();
   }
 }
