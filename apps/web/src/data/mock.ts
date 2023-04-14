@@ -4,7 +4,7 @@ export const ONE_MINUTE = 60 * 1000;
 
 export const workouts = {
   amrap: {
-    type: workoutTypes.amrap.toUpperCase(),
+    type: workoutTypes.amrap,
     // duration: 6 * 1000,
     duration: 3 * ONE_MINUTE,
     activities: [

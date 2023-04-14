@@ -63,7 +63,8 @@ const Home: NextPage = () => {
               <Link href={`/workout/today`} key={i} className="flex-1">
                 <div className="rounded border border-zinc-800 px-4 py-2">
                   <div className="mb-0 text-lg font-bold">
-                    {workout.duration / ONE_MINUTE} min. {workout.type}
+                    {workout.duration / ONE_MINUTE} min.{" "}
+                    {workout.type.toUpperCase()}
                   </div>
                   <div className="mb-4 text-zinc-600">
                     (as many reps as possible)
