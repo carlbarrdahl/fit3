@@ -3,7 +3,7 @@ import { memo, useEffect, useRef } from "react";
 
 import { CheckPoseArgs, createCamera, createPose, render } from "utils/pose";
 
-let camera: Camera;
+let camera: Camera | null;
 const pose = createPose();
 
 function usePose(detect: (args: CheckPoseArgs) => void) {
@@ -21,6 +21,10 @@ function usePose(detect: (args: CheckPoseArgs) => void) {
         camera.start();
       }
     }
+    return () => {
+      camera?.stop();
+      camera = null;
+    };
   }, [detect]);
 
   return { canvasRef, videoRef };
@@ -37,7 +41,7 @@ export const PoseEstimation = memo(({ detect }: Props) => {
         width={600}
         height={600}
         ref={canvasRef}
-        className="absolute top-0 left-0 w-full"
+        className="absolute left-0 top-0 w-full"
       />
       <video ref={videoRef} muted />
     </div>

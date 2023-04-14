@@ -12,6 +12,7 @@ import { H3 } from "components/ui/Text";
 import { NotImplemented } from "components/NotImplemented";
 import { useWorkout } from "features/workout/store";
 import { useEffect } from "react";
+import { Button } from "components/ui/Button";
 
 const workoutList = [
   workouts.amrap,
@@ -32,7 +33,7 @@ const Home: NextPage = () => {
   }, []);
   return (
     <Layout>
-      <div className="flex flex-col gap-6">
+      <div className="flex flex-col gap-4">
         <div>
           <H3>Current streak</H3>
           <div className="flex justify-between">
@@ -60,9 +61,12 @@ const Home: NextPage = () => {
           <div className="flex gap-2">
             {workoutList.map((workout, i) => (
               <Link href={`/workout/today`} key={i} className="flex-1">
-                <div className="rounded border border-zinc-800 py-2 px-4">
-                  <div className="mb-4 text-lg font-bold">
-                    {workout.duration / ONE_MINUTE} min.
+                <div className="rounded border border-zinc-800 px-4 py-2">
+                  <div className="mb-0 text-lg font-bold">
+                    {workout.duration / ONE_MINUTE} min. {workout.type}
+                  </div>
+                  <div className="mb-4 text-zinc-600">
+                    (as many reps as possible)
                   </div>
                   <div className="">
                     {workout.activities.map((activity) => {
@@ -76,6 +80,9 @@ const Home: NextPage = () => {
                         </div>
                       );
                     })}
+                  </div>
+                  <div className="flex justify-center">
+                    <Button>Go to workout</Button>
                   </div>
                 </div>
               </Link>

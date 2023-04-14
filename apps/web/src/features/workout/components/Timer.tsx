@@ -18,6 +18,7 @@ export const WorkoutTimer = ({ length = 0 }) => {
   const min = parseTime((duration % (60 * 60)) / 60);
   const sec = parseTime(duration % 60);
 
+  console.log(duration, length / 1000);
   useEffect(() => {
     if (duration > length / 1000) {
       stop();
@@ -31,7 +32,7 @@ export const WorkoutTimer = ({ length = 0 }) => {
   }, [finishedAt]);
 
   useHarmonicIntervalFn(() => {
-    startedAt && setNow(nowInSec() - 5);
+    startedAt && setNow(nowInSec());
   }, 1000);
 
   return (
@@ -44,8 +45,15 @@ export const WorkoutTimer = ({ length = 0 }) => {
         <span className="text-sm">/</span>
         <div>{length / ONE_MINUTE} min.</div>
       </div>
-      <Button size="sm" disabled={startedAt} onClick={() => start()}>
-        Start workout
+      <Button
+        size="sm"
+        disabled={startedAt}
+        onClick={() => {
+          start();
+          setNow(nowInSec());
+        }}
+      >
+        Begin!
       </Button>
     </div>
   );
