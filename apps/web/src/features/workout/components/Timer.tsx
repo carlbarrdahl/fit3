@@ -6,19 +6,21 @@ import { useEffect, useState } from "react";
 import { useRouter } from "next/router";
 
 const nowInSec = () => Math.round(Date.now() / 1000);
-const parseTime = (time: number) =>
-  Math.round(Math.abs(time)).toString().padStart(2, "0");
 
+const toMinutes = (time: number) => {
+  const min = Math.floor(time / 60);
+  return [min % 60, time % 60];
+};
 export const WorkoutTimer = ({ length = 0 }) => {
   const router = useRouter();
   const [now, setNow] = useState(0);
   const { start, stop, startedAt, finishedAt } = useWorkout();
 
   const duration = now - Math.round(startedAt / 1000);
-  const min = parseTime((duration % (60 * 60)) / 60);
-  const sec = parseTime(duration % 60);
+  const [min, sec] = toMinutes(duration).map((n) =>
+    n.toString().padStart(2, "0")
+  );
 
-  console.log(duration, length / 1000);
   useEffect(() => {
     if (duration > length / 1000) {
       stop();
@@ -36,25 +38,33 @@ export const WorkoutTimer = ({ length = 0 }) => {
   }, 1000);
 
   return (
-    <div className="mb-4 flex flex-1 items-center justify-between">
-      <div className="flex items-center gap-3 text-lg tracking-widest">
-        <div className="text-white">
-          {duration < 0 ? "-" : ""}
-          {min}:{sec}
+    <>
+      <div className="mb-4 flex flex-1 items-center justify-between">
+        <div className="flex items-center gap-3 text-lg tracking-widest">
+          <div className="text-white">
+            {min}:{sec}
+          </div>
+          <span className="text-sm">/</span>
+          <div>{length / ONE_MINUTE} min.</div>
         </div>
-        <span className="text-sm">/</span>
-        <div>{length / ONE_MINUTE} min.</div>
+        <Button
+          size="sm"
+          className={startedAt ? "invisible" : ""}
+          disabled={startedAt}
+          onClick={() => {
+            start();
+            setNow(nowInSec());
+          }}
+        >
+          Begin!
+        </Button>
       </div>
-      <Button
-        size="sm"
-        disabled={startedAt}
-        onClick={() => {
-          start();
-          setNow(nowInSec());
-        }}
-      >
-        Begin!
-      </Button>
-    </div>
+      {!startedAt ? (
+        <div className="mb-4 text-zinc-600">
+          Place the phone on the floor so you can see yourself in the camera and
+          press Begin.
+        </div>
+      ) : null}
+    </>
   );
 };

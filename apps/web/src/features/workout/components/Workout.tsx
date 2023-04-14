@@ -14,10 +14,7 @@ export const Workout = ({ workout }: Props) => {
   return (
     <div>
       <WorkoutTimer length={workout.duration} />
-      <div className="mb-4 text-zinc-600">
-        Place the phone on the floor so you can see yourself in the camera and
-        press Start.
-      </div>
+
       <div className="mb-2 uppercase tracking-widest">Round {currentRound}</div>
       <ActivityList {...workout} />
 
