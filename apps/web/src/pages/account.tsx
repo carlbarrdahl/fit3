@@ -5,14 +5,14 @@ import { workouts } from "data/mock";
 import { NotImplemented } from "components/NotImplemented";
 import { H3 } from "components/ui/Text";
 
-const Leaderboard: NextPage = () => {
+const Account: NextPage = () => {
   const workout = workouts.amrap;
   return (
     <Layout>
-      <H3>Leaderboard</H3>
+      <H3>Account</H3>
       <NotImplemented />
     </Layout>
   );
 };
 
-export default Leaderboard;
+export default Account;

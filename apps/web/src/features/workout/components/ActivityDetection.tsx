@@ -3,7 +3,7 @@ import dynamic from "next/dynamic";
 import { useWorkout } from "../store";
 import { Workout, WorkoutActivity } from "../schemas";
 
-import { Activity } from "activities";
+import { Activities } from "activities";
 import { CheckPoseArgs } from "utils/pose";
 
 const PoseEstimation = dynamic(() => import("components/PoseEstimation"), {
@@ -12,10 +12,10 @@ const PoseEstimation = dynamic(() => import("components/PoseEstimation"), {
 
 let lastUpdate = 0;
 
-const SAMPLING_RATE = 500;
+const SAMPLING_RATE = 200;
 
 type Props = {
-  activities: Record<string, (args: Activity) => void>;
+  activities: Activities;
   workout: Workout;
 };
 
@@ -35,10 +35,10 @@ export const ActivityDetection = ({ activities, workout }: Props) => {
     (args: CheckPoseArgs) => {
       const activity = workout.activities[currentActivity] as WorkoutActivity;
       if (activity) {
-        const type = activity.type;
+        const type = activity.type as keyof typeof activities;
 
         state.current.startedAt = startedAt;
-        activities[type]?.({
+        activities[type]?.func?.({
           ...args,
           state: state.current,
           onCount: () => tick(workout),
@@ -46,21 +46,26 @@ export const ActivityDetection = ({ activities, workout }: Props) => {
 
         // Record args.parts and store in WorkoutResults
         // Move to store
-        const now = Date.now();
-        if (now - lastUpdate > SAMPLING_RATE) {
-          const parts = Object.entries(args.parts)
-            // Only visible parts
-            .filter(([key, part]) => part?.visibility && part.visibility > 0.5)
-            .reduce(
-              (acc, [key, part]) => ({
-                ...acc,
-                timestamp: Date.now(),
-                parts: { ...acc.parts, [key]: part },
-              }),
-              { parts: {} }
-            );
-          lastUpdate = Date.now();
-          // pushProof(parts);
+        if (state.current.startedAt) {
+          const now = Date.now();
+          if (now - lastUpdate > SAMPLING_RATE) {
+            const parts = Object.entries(args.body)
+              // Only visible parts
+              .filter(
+                ([key, part]) => part?.visibility && part.visibility > 0.5
+              )
+              .reduce(
+                (acc, [key, part]) => ({
+                  ...acc,
+                  timestamp: Date.now(),
+                  body: { ...acc.body, [key]: part },
+                }),
+                { body: {} }
+              );
+            lastUpdate = Date.now();
+            // pushProof(parts);
+            // console.log(parts);
+          }
         }
       }
     },

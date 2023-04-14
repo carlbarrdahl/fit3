@@ -1,4 +1,4 @@
-import { createComponent } from "components";
+import { createComponent } from ".";
 import { tv } from "tailwind-variants";
 
 const button = tv({

@@ -1,3 +1,66 @@
+# fit3
+
+Fit3 is a mobile fitness application that uses pose estimation technology from your smartphone camera to track exercise repetitions. The app offers daily crossfit-inspired workouts and allows users to create groups and challenge friends, as well as compete against other groups. Fit3 also features a leaderboard and achievement system to track progress and offers skill level assessments to help users improve their fitness performance. With its advanced technology and engaging features, Fit3 is a great option for anyone looking to add more fun and motivation to their fitness routine.
+
+- fit3 is a fitness mobile game that uses pose estimation from your camera to count repetitions
+- create groups and challenge your friends
+- compete with your friends against other groups
+- crossfit-inspired workouts of the day
+- a leaderboard and achievements
+- assessments of skill level
+- proof of workout (lz compression)
+
+### User flow
+
+1. Start app
+2. Tap workout of the day
+3. Prepare and press Start to begin
+4. Do the activities until timer runs out
+   - Each activity has code to detect a successful rep.
+5. Submit the results and proof of workout (recorded pose data over time)
+
+### Leaderboard
+
+- Global
+  - Longest streak
+- Group
+  - Max reps
+
+### Social & Gaming
+
+- Group Challenges
+  - Create a group and invite your friends for accountability and pushing your squad
+- Experience points
+  - Each activity rep is counted
+- Achievements
+  - "100 push_ups"
+- Items
+  - Consumables
+    - RestDay protects your streak and lets you rest a day
+  - Equipable
+
+### Activity Marketplace
+
+- Crowdsource activity detection scripts
+
+### Activities
+
+- Push-up
+- Airsquat
+- Shoulder taps / Plank
+- Burpee
+- Mountain climbers
+- Sit-up
+- Lunges
+- Jumping jacks
+- Jumping lunges
+- Jumping squats
+- Box jumps or step-ups
+- Lateral hop over an object
+- Russian twist
+
+---
+
 # Turborepo starter
 
 This is an official pnpm starter turborepo.

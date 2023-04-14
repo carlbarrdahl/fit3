@@ -1,4 +1,4 @@
-import { createComponent } from "components";
+import { createComponent } from ".";
 import NextLink from "next/link";
 
 import { tv } from "tailwind-variants";

@@ -12,17 +12,23 @@ interface WorkoutState {
   tick: (workout: Workout) => void;
   start: () => void;
   stop: () => void;
+  reset: () => void;
 }
 
-export const useWorkout = create<WorkoutState>((set) => ({
+const initialState = {
   currentActivity: 0,
   currentRound: 1,
   counters: {},
   timers: {},
   startedAt: 0,
   finishedAt: 0,
+};
+
+export const useWorkout = create<WorkoutState>((set) => ({
+  ...initialState,
   start: () => set((state) => ({ ...state, startedAt: Date.now() })),
   stop: () => set((state) => ({ ...state, finishedAt: Date.now() })),
+  reset: () => set(() => initialState),
   tick: (workout) =>
     set(
       produce((state) => {

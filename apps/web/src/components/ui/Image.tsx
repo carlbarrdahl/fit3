@@ -1,6 +1,6 @@
 import { tv } from "tailwind-variants";
 
-import { createComponent } from "components";
+import { createComponent } from ".";
 
 const image = tv({
   base: "block w-full h-full",

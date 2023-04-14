@@ -3,9 +3,9 @@ import clsx from "clsx";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import { useIsFetching } from "@tanstack/react-query";
-import { Wallet, Zap } from "lucide-react";
+import { User, Wallet, Zap } from "lucide-react";
 
-import { Button } from "components/Button";
+import { Button } from "components/ui/Button";
 import { BaseLayout } from "./BaseLayout";
 import site from "config/site";
 
@@ -39,10 +39,9 @@ export const Layout = ({
         <div className="flex items-center gap-1 text-xs">
           <NavLink label="Train" href={`/`} />
           <NavLink label="Leaderboard" href={`/leaderboard`} />
-          <NavLink label="?" href={`/about`} />
-          <Link href={`/wallet`} className="">
+          <Link href={`/account`} className="">
             <Button color="dark" className="rounded-full py-2 px-2">
-              <Wallet className="h-4 w-4" />
+              <User className="h-4 w-4" />
             </Button>
           </Link>
         </div>

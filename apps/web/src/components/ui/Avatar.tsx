@@ -1,7 +1,7 @@
 import { tv } from "tailwind-variants";
 
 import * as RadixAvatar from "@radix-ui/react-avatar";
-import { createComponent } from "components";
+import { createComponent } from ".";
 import { Image } from "./Image";
 
 const avatar = tv({

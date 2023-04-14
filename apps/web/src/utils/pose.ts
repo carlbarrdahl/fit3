@@ -33,8 +33,16 @@ type PoseLandmarkMap = {
 type Point = { x: number; y: number };
 
 export interface CheckPoseArgs {
-  parts: PoseLandmarkMap;
-  calcAngle: (point1?: Point, point2?: Point, point3?: Point) => number | null;
+  body: PoseLandmarkMap;
+  calcAngle: (
+    point1?: NormalizedLandmark,
+    point2?: NormalizedLandmark,
+    point3?: NormalizedLandmark
+  ) => number | null;
+  mergeSides: (
+    left: NormalizedLandmark[],
+    right: NormalizedLandmark[]
+  ) => NormalizedLandmark[];
 }
 
 const styles = {
@@ -103,7 +111,7 @@ export function render(
 
     drawLandmarks(results.poseLandmarks, ctx);
 
-    detect({ parts: buildParts(results.poseLandmarks), calcAngle });
+    detect({ body: buildParts(results.poseLandmarks), calcAngle, mergeSides });
 
     ctx.restore();
   };
@@ -119,7 +127,11 @@ export function buildParts(poseLandmarks: NormalizedLandmarkList) {
   }, {} as PoseLandmarkMap);
 }
 
-export function calcAngle(point1?: Point, point2?: Point, point3?: Point) {
+export function calcAngle(
+  point1?: NormalizedLandmark,
+  point2?: NormalizedLandmark,
+  point3?: NormalizedLandmark
+) {
   if (!(point1 && point2 && point3)) return null;
 
   let radians =
@@ -133,4 +145,17 @@ export function calcAngle(point1?: Point, point2?: Point, point3?: Point) {
   }
 
   return angle;
+}
+
+function mergeSides(left: NormalizedLandmark[], right: NormalizedLandmark[]) {
+  return left.map((part, index: number) =>
+    Object.keys(part).reduce((acc, key) => {
+      const _left = left[index]?.[key as keyof typeof part];
+      const _right = right[index]?.[key as keyof typeof part];
+      return {
+        ...acc,
+        [key]: _left || _right,
+      };
+    }, {})
+  ) as NormalizedLandmark[];
 }

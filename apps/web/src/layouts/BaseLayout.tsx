@@ -25,7 +25,7 @@ export const BaseLayout = ({ children }: PropsWithChildren) => {
       </Head>
       <main className="flex min-h-screen flex-col justify-center bg-black font-mono text-sm md:py-16">
         <div
-          className="aapp container relative mx-auto flex h-screen max-w-md flex-col overflow-hidden bg-zinc-900 text-zinc-300 md:rounded-xl md:shadow-2xl"
+          className="app container relative mx-auto flex h-screen max-w-md flex-col overflow-hidden bg-zinc-900 text-zinc-300 md:rounded-xl md:shadow-2xl"
           style={{ maxHeight: 851, height: `calc(var(--vh, 1vh) * 100)` }}
         >
           {children}
