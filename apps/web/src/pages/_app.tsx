@@ -6,16 +6,17 @@ import { Analytics } from "@vercel/analytics/react";
 import { api } from "../utils/api";
 
 import "../styles/globals.css";
+import { Web3AuthProvider } from "providers/Web3AuthProvider";
 
 const MyApp: AppType<{ session: Session | null }> = ({
   Component,
   pageProps: { session, ...pageProps },
 }) => {
   return (
-    <SessionProvider session={session}>
+    <Web3AuthProvider chain="mainnet" web3AuthNetwork="testnet">
       <Component {...pageProps} />
       <Analytics />
-    </SessionProvider>
+    </Web3AuthProvider>
   );
 };
 

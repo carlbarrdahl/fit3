@@ -7,6 +7,7 @@ import { useWorkout } from "features/workout/store";
 import { Button } from "components/ui/Button";
 import { getActivity } from "activities";
 import Link from "next/link";
+import { LoginButton } from "features/auth/components/LoginButton";
 
 const labels = {
   repeat: "reps",

@@ -33,9 +33,7 @@ const DevControls = ({ workout }: { workout: t.Workout }) => {
       <Button disabled={!startedAt} onClick={() => tick(workout)}>
         Skip
       </Button>
-      <Button disabled={!startedAt} onClick={() => stop()}>
-        Finish workout
-      </Button>
+      <Button onClick={() => stop()}>Finish workout</Button>
     </div>
   ) : null;
 };

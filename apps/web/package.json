@@ -22,6 +22,9 @@
     "@trpc/react-query": "^10.9.0",
     "@trpc/server": "^10.9.0",
     "@vercel/analytics": "^0.1.11",
+    "@web3auth/base": "^5.1.0",
+    "@web3auth/modal": "^5.1.1",
+    "@web3auth/openlogin-adapter": "^5.1.1",
     "clsx": "^1.2.1",
     "immer": "^9.0.19",
     "lucide-react": "^0.113.0",
@@ -32,6 +35,7 @@
     "react-use": "^17.4.0",
     "superjson": "1.9.1",
     "tailwind-variants": "^0.0.30",
+    "viem": "^0.3.2",
     "zod": "^3.20.6",
     "zustand": "^4.3.3"
   },
