@@ -37,7 +37,7 @@ Keep up the hard work!
       </p>
 
       <div className="flex justify-center">
-        <Button as={Link} href="/">
+        <Button as={Link} href="/leaderboard">
           Go to leaderboard
         </Button>
       </div>

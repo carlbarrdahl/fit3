@@ -64,7 +64,7 @@ export const useWorkout = create<WorkoutState>((set) => ({
           sound++;
         }
 
-        console.log(JSON.stringify(state, null, 2));
+        // console.log(JSON.stringify(state, null, 2));
         playSound(sound);
       })
     ),
