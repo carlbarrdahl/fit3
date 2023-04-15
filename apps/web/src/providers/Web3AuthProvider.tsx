@@ -110,7 +110,7 @@ export const Web3AuthProvider: FunctionComponent<IWeb3AuthState> = ({
           chainConfig: {
             chainNamespace: CHAIN_NAMESPACES.EIP155,
             chainId: "0x5",
-            rpcTarget: `https://eth-goerli.g.alchemy.com/v2/SqRHw2HjBjLCbvoAu0TYCirdJhF_wsaC`,
+            rpcTarget: `https://eth-goerli.g.alchemy.com/v2/${process.env.NEXT_PUBLIC_ALCHEMY_KEY}`,
           },
           clientId,
         });
